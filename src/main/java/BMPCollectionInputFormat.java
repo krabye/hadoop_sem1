@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.ceil;
+
 /**
  * Read Bitmaps written one after another
  * The thing is - bitmaps of same dimension has same size in bytes.
@@ -94,7 +96,13 @@ public class BMPCollectionInputFormat extends FileInputFormat<NullWritable, Byte
             Path path = status.getPath();
             System.out.println("flen: " + flen + ", split_size: " + split_size + ", n_splits:" + (flen/split_size));
 
+            int n_splits = (int)(flen/split_size);
+            long offset = 0;
 
+            for (int i=0; i < n_splits; ++i){
+                splits.add(new FileSplit(path, offset, split_size, null));
+                offset += split_size;
+            }
 
             /*
              * WRITE YOUR CODE HERE:
