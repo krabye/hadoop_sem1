@@ -92,7 +92,9 @@ public class BMPCollectionInputFormat extends FileInputFormat<NullWritable, Byte
             long split_size = getNumBytesPerSplit(context.getConfiguration());
             long flen = status.getLen();
             Path path = status.getPath();
-            System.out.println("flen: " + flen);
+            System.out.println("flen: " + flen + ", split_size: " + split_size + ", n_splits:" + (flen/split_size));
+
+
 
             /*
              * WRITE YOUR CODE HERE:
